@@ -1,7 +1,7 @@
 #include "header.h"
 #include "header_allegro.h"
 #include <winalleg.h>
-void intitialisation_rec(FILE* niveau_rec, char tab[15][19])
+void intitialisation_rec(FILE* niveau_rec, char tab[15][19])//lit les valeurs 1 à 1 et les rentre dans le tableau de valeurs tab [i][j]
 {
     int i,j;
     for(i=0; i<15; i++)
@@ -12,7 +12,7 @@ void intitialisation_rec(FILE* niveau_rec, char tab[15][19])
         }
     }
 }
-void recherche_joueur(char valeurs[15][19], int* x, int*y)
+void recherche_joueur(char valeurs[15][19], int* x, int*y)//trouve le joueur à partir de sa valeur en dur déjà pré définie
 {
     int i,j;
     for(i=0; i<15; i++)
@@ -31,11 +31,10 @@ void recherche_joueur(char valeurs[15][19], int* x, int*y)
 void recherche_sortie_et_ennemis(char tab[15][19], int* xsortie, int* ysortie, int* tunnel, int* nb_ennemis)
 {
     int i,j;
-    for(i=0; i<15; i++)
+    for(i=0; i<15; i++)//cherche la sortie et les ennemis  à partir de leurs valeurs en durs déjà pré définies (3, 7 et 66)
     {
         for(j=0; j<19; j++)
         {
-
    		 if(tab[i][j]==3)
    			 {
    				 *ysortie=i;
@@ -51,7 +50,7 @@ void recherche_sortie_et_ennemis(char tab[15][19], int* xsortie, int* ysortie, i
         }
     }
 }
-int update_cases_glace(char tab[15][19])
+int update_cases_glace(char tab[15][19])//compte le nombre de cases destructibles sur lesquelles le joueur est obligé de passer
 {
     int i,j;
     int val=0;
@@ -65,7 +64,7 @@ int update_cases_glace(char tab[15][19])
     return val;
 }
 
-int update_cases_eau(char tab[15][19])
+int update_cases_eau(char tab[15][19])//compte le nombre de cases d'eau + le joueur car on va comparer cases eau et acses glaces pour dire dire si on a gagner le niveau
 {
     int i,j;
     int val=0;
@@ -78,16 +77,16 @@ int update_cases_eau(char tab[15][19])
     }
     return val;
 }
-void initialisation_console(char tab[15][19], char affiche_console[15][19], int score )
+void initialisation_console(char tab[15][19], char affiche_console[15][19], int score )//gere le mode console 
 {
     int i,j;
 
      for(i=0; i<15; i++)
     {
-        gotoligcol(POS_ECRAN_Y+i,POS_ECRAN_X);
+        gotoligcol(POS_ECRAN_Y+i,POS_ECRAN_X);//quand on lance la console en plein écran, affiche le tableau de jeu au milieu
         for(j=0; j<19; j++)
         {
-            printf(" %c ", affiche_console[i][j]);
+            printf(" %c ", affiche_console[i][j]);//affiche notre tableau 
         }
         if (i==0) printf("score: %d", score);
         if (i==1) printf("score niveau: 0");
@@ -114,7 +113,7 @@ void affichage_score(int* score, int score_niveau) //Affichage du score pendant 
      fscanf(fichier,"%d",&zones_glaces);
         k=0;
     j=0;
-   	 while( k<15)
+   	 while( k<15)// dit au programme a quoi correspond les valeurs dans le fichier texte
             {
                 j=0;
        while( j<19)
@@ -161,7 +160,7 @@ void affichage_score(int* score, int score_niveau) //Affichage du score pendant 
 void deplacement(char tab[15][19], int *clef,int score_general, int* score, int *precedent, char changement[50][2], int* emplacement, int* potion, char affiche[15][19], int niveau){
 int i,j,x,y,z=1, test, direction;
 char move;
-//on rep�re la case avec le joueur
+//on repère la case avec le joueur
 for(i=0; i<15; i++){
     for(j=0; j<19; j++)
     {
@@ -184,7 +183,7 @@ if (kbhit()){
 
         move=getch();
         switch (move){
-            // modification en fonction de la direction choisie, incr�ment du score.
+            // modification en fonction de la direction choisie, incrément du score.
             case 's':
                     case_suivante_joueur=tab[y+1][x];
                     changement[*emplacement][0]=x;
@@ -251,7 +250,7 @@ if (case_suivante_joueur>=0)
                                 z=0;
                                 (*potion)--;
                             }
-                //on d�cale le personage et diminue la glace derri�re lui
+                //on décale le personage et diminue la glace derrière lui
                     i=case_suivante_joueur;
                     tab[changement[*emplacement][1]][changement[*emplacement][0]]=tab[y][x];
                     *precedent= *precedent-z;
@@ -259,7 +258,7 @@ if (case_suivante_joueur>=0)
                     tab[y][x]=*precedent;
                     *precedent=i;
                     *emplacement= *emplacement +1;
-                    // test de la pr�sence d'une clef
+                    // test de la présence d'une clef
                     if (*precedent== 100)
                     {
                     *clef= *clef+1;
@@ -354,7 +353,7 @@ case 8:
 }
 int TEST_DIE( char tab[15][19],int clef, int lvl, int *score, int precedent, int mode_graphique){
  int i,j,x, y, xs, ys;
-//on rep�re la case avec le joueur
+//on repère la case avec le joueur
 i=0;
 j=0;
 for(i=0; i<15; i++)
@@ -371,7 +370,7 @@ for(i=0; i<15; i++)
                     }
             }
 
-//test de la condition de mort: entour� de cases a valeur n�gatives
+//test de la condition de mort: entouré de cases a valeur négatives
 
 if ((((tab[y+1][x]<0)&&(tab[y-1][x]<0)&&(tab[y][x+1]<0)&&(tab[y][x-1]<0)&&(clef==0))||(((tab[y+1][x]<0)&&(tab[y-1][x]<0)&&(tab[y][x+1]<0)&&(tab[y][x-1]<0))&&((tab[y+1][x]!=-50)&&((tab[y-1][x]!=-50)&&(tab[y][x+1]!=-50)&&(tab[y][x-1]!=-50))))||(precedent==66))){
 switch(afficher_mort(score, lvl,  mode_graphique))
@@ -450,7 +449,7 @@ int i,j;
 // boucle sur tout le tableau
 for(i=0; i<15; i++){
     for(j=0; j<19; j++){
-            //affectation de la valeur du caract�re dans le tableau d'affichage
+            //affectation de la valeur du caractère dans le tableau d'affichage
         switch (tab[i][j]){
     case -2: affiche[i][j]= 225-18;
     break;
@@ -465,7 +464,7 @@ for(i=0; i<15; i++){
     case -50: affiche[i][j]= 225-19;
     break;//les serrures
     case 100: affiche[i][j]= 225-28;
-    break;//les cl�s
+    break;//les clés
     case 2:affiche[i][j]= 225-17;
     break; //le personnage
     case 3: affiche[i][j]=225-16;
@@ -480,13 +479,13 @@ for(i=0; i<15; i++){
     case 5: affiche[i][j]= 246;
     // le rocher
         break;
-        case 7: affiche[i][j]= 'O';
+        case 7: affiche[i][j]= 'O';//tunnels
         break;
-        case 8: affiche[i][j]=175;
+        case 8: affiche[i][j]=175;//turbo
         break;
 
         }
-        if (tab[i][j]>100) affiche[i][j]= 203;
+        if (tab[i][j]>100) affiche[i][j]= 203;//recherche de téléporteurs 
         }
 
     }
@@ -494,7 +493,7 @@ for(i=0; i<15; i++){
 
 void affichage(char changement[50][2], char affiche[15][19], int emplacement){
 int i;
-//on rep�re la case avec le joueur
+//on repère la case avec le joueur
 
 for(i=0; i<emplacement; i++){
 gotoligcol(POS_ECRAN_Y+changement[i][1],POS_ECRAN_X+3*changement[i][0]+1);
