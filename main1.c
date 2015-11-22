@@ -24,14 +24,14 @@ void mes_niveaux(int* score, int mode_graphique)
     fscanf(nom_des_fichiers, "%d", &i);
     while(x)
     {
-    printf("Quel est le nom du niveau?\n");
+    printf("quel est le nom du niveau?\n");
     scanf("%s", mot);
     if (strlen(mot)<44)
     {
         strcat(mot, ".txt");
         x=0;
     }
-    else printf("Ce nom est trop long\n");
+    else printf("ce nom est trop long\n");
     }
     x=1;
         while(i)
@@ -97,7 +97,7 @@ void fonction_admin (int mode_graphique, int* score)
         jeu_graphique(entre-1, score, mode_graphique, NULL);
         x=0;
         break;
-    default:
+    default: //Blindage
         printf("ce n'est pas une entree valide!\nveuillez essayer a nouveau:");
     }
    }
@@ -128,7 +128,7 @@ int main()//Preparation du menu du PRJ01
                     {
                             if (mode_graphique!=0)
                             {
-                            // si c'est le premier niveau joué
+                            // si un mode graphique est active
 
                                     // on initiallise allegro
                                     allegro_init();
@@ -144,11 +144,9 @@ int main()//Preparation du menu du PRJ01
                             {
                                 switch(jeu_graphique(niveau, &score, mode_graphique, NULL))
                                 {
-                                    case 1: niveau--;
+                                    case 1: niveau--;//le jeu retroune 1 si on recommence le meme niveau
                                     break;
-                                    case 3: niveau=5;
-
-                                    //si l'utilisateur rentre le bon trucs, appelle la fonction
+                                    case 3: niveau=5; //le jeu retroune 3 pour quitter 
                                     x++;
                                 }
                             }
